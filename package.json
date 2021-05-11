@@ -1,0 +1,23 @@
+{
+  "name": "chia-log-parser",
+  "version": "0.0.1",
+  "description": "Parse chia plot logs",
+  "main": "index.js",
+  "bin": {
+    "chia-log-parser": "./bin/parse-file.js"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "npm run lint"
+  },
+  "author": "Martin Jonsson <martin.jonsson@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "date-fns": "^2.21.3",
+    "line-by-line": "^0.1.6"
+  },
+  "devDependencies": {
+    "@aptoma/eslint-config": "^7.0.1",
+    "eslint": "^7.26.0"
+  }
+}

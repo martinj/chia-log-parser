@@ -1,0 +1,16 @@
+{
+	"extends": "@aptoma/eslint-config",
+	"rules": {
+		"no-sparse-arrays": ["off"],
+		"no-unused-vars": ["error", { "vars": "all", "args": "none"}],
+		"indent": ["error", "tab", {"SwitchCase": 1, "MemberExpression": "off"}],
+	},
+	"parserOptions": {
+		"ecmaVersion": 2020
+	},
+	"env": {
+		"node": true,
+		"mocha": true,
+		"es6": true
+	}
+}
