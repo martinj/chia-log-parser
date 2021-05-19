@@ -8,7 +8,10 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint"
+    "test": "npm run lint && mocha",
+    "release": "npm test && release-it -n -i patch",
+    "release:minor": "npm test && release-it -n -i minor",
+    "release:major": "npm test && release-it -n -i major"
   },
   "author": "Martin Jonsson <martin.jonsson@gmail.com>",
   "license": "MIT",
@@ -18,6 +21,10 @@
   },
   "devDependencies": {
     "@aptoma/eslint-config": "^7.0.1",
-    "eslint": "^7.26.0"
+    "auto-changelog": "^2.2.1",
+    "eslint": "^7.26.0",
+    "expect": "^26.6.2",
+    "mocha": "^8.4.0",
+    "release-it": "^14.6.2"
   }
 }
