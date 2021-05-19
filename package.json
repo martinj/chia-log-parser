@@ -1,6 +1,6 @@
 {
   "name": "chia-log-parser",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Parse chia plot logs",
   "main": "index.js",
   "bin": {
