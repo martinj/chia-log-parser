@@ -1,5 +1,6 @@
 'use strict';
 const fs = require('fs');
+const {stat: fsStat} = fs.promises;
 const EventEmitter = require('events');
 const {parse: parseDate} = require('date-fns');
 const LineByLineReader = require('line-by-line');
@@ -80,7 +81,7 @@ class Parser extends EventEmitter {
 			}
 
 			this.once('error', error);
-			this.once('done', done);
+			this.once('parseEnd', done);
 			this.start();
 		});
 	}
@@ -106,25 +107,37 @@ class Parser extends EventEmitter {
 		});
 	}
 
-	start(startByte) {
-		const lr = new LineByLineReader(this.file, {skipEmptyLines: true, start: startByte});
+	async start(startByte) {
+		let fileStat;
+		try {
+			fileStat = await fsStat(this.file);
+		} catch (err) {
+			this.emit('error', err);
+			return;
+		}
 
 		if (!startByte) {
 			this.startIndex = 0;
 			this.endIndex = 0;
 			this.endByte = 0;
 			this.currentPhase = 0;
-			this.data = {};
+			this.data = {
+				created: fileStat.birthtime
+			};
 			this.started = false;
 			this.finished = false;
 		}
 
-		lr.on('error', (err) => this.emit(err));
+		this.data.modified = fileStat.mtime;
+
+		const lr = new LineByLineReader(this.file, {skipEmptyLines: true, start: startByte});
+
+		lr.on('error', (err) => this.emit('error', err));
 
 		lr.on('line', (line) => this.onNewLine(line));
 
 		lr.on('end', () => {
-			this.emit('parseEnd');
+			this.emit('parseEnd', this.data);
 			if (this.finished) {
 				this.emit('done', this.data);
 			}
