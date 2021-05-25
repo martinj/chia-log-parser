@@ -1,16 +1,25 @@
 'use strict';
 
 const expect = require('expect');
-const logParser = require('../');
+const plot = require('../src/plot');
 const logFile = __dirname + '/fixtures/plot-log.txt';
 const logFilePart = __dirname + '/fixtures/plot-log-unfinished.txt';
 
 describe('Plot parser', () => {
 
+	describe('stringToDate', () => {
+
+		it('handles double and single digit days', () => {
+			expect(plot.stringToDate('Fri May 21 13:38:03 2021')).toEqual(new Date('2021-05-21T11:38:03.000Z'));
+			expect(plot.stringToDate('Sat May  8 11:38:18 2021')).toEqual(new Date('2021-05-08T09:38:18.000Z'));
+		});
+
+	});
+
 	describe('parse()', () => {
 
 		it('parses log file', async () => {
-			const parser = logParser(logFile);
+			const parser = plot(logFile);
 			const res = await parser.parse();
 
 			expect(res.modified).toBeInstanceOf(Date);
@@ -61,7 +70,7 @@ describe('Plot parser', () => {
 		});
 
 		it('parses non finished file', async () => {
-			const parser = logParser(logFilePart);
+			const parser = plot(logFilePart);
 			const res = await parser.parse();
 
 			expect(res.modified).toBeInstanceOf(Date);
@@ -85,7 +94,7 @@ describe('Plot parser', () => {
 	describe('start()', () => {
 
 		it('emits events', (done) => {
-			const parser = logParser(logFile);
+			const parser = plot(logFile);
 			const events = {
 				phaseStart: 0,
 				phaseEnd: 0,
@@ -118,7 +127,7 @@ describe('Plot parser', () => {
 		});
 
 		it('emits parseEnd for non finished log file', (done) => {
-			const parser = logParser(logFilePart);
+			const parser = plot(logFilePart);
 			parser.on('parseEnd', (data) => {
 				delete data.created;
 				delete data.modified;
@@ -140,7 +149,7 @@ describe('Plot parser', () => {
 		});
 
 		it('emits error if file is not readable', (done) => {
-			const parser = logParser('.');
+			const parser = plot('.');
 			parser.on('error', (err) => {
 				expect(err.message).toEqual('EISDIR: illegal operation on a directory, read');
 				done();
