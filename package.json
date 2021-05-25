@@ -4,11 +4,11 @@
   "description": "Parse chia plot logs",
   "main": "index.js",
   "bin": {
-    "chia-log-parser": "./bin/parse-file.js"
+    "chia-plot-parser": "./bin/parse-plot.js"
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && mocha",
+    "test": "npm run lint && NODE_ENV=test mocha",
     "release": "npm test && release-it -n -i patch",
     "release:minor": "npm test && release-it -n -i minor",
     "release:major": "npm test && release-it -n -i major"
@@ -16,8 +16,9 @@
   "author": "Martin Jonsson <martin.jonsson@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@logdna/tail-file": "^2.0.6",
     "date-fns": "^2.21.3",
-    "line-by-line": "^0.1.6"
+    "split2": "^3.2.2"
   },
   "devDependencies": {
     "@aptoma/eslint-config": "^7.0.1",

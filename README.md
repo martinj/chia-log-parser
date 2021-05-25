@@ -1,7 +1,7 @@
 
 # Chia log parser
 
-Parses chia plot logs
+Parses chia plot and harvest logs
 
 ## Install
 
@@ -9,10 +9,12 @@ Parses chia plot logs
 
 ## Examples
 
-```javascript
-const logParser = require('chia-log-parser');
+### Plot Parser
 
-const parser = logParser('/Users/home/.chia/mainnet/plotter/plot_log_xxx');
+```javascript
+const {plotParser} = require('chia-log-parser');
+
+const parser = plotParser('/Users/home/.chia/mainnet/plotter/plot_log_xxx');
 ['phaseStart', 'phaseEnd', 'error', 'started', 'finished', 'done', 'progress'].forEach((event) => {
 	parser.on(event, (...args) => console.log(`[${event}]`, ...args));
 });
@@ -70,4 +72,46 @@ parser.watch();
 	  copyCpu: 75.12,
 	  copyFinishedTime: 2021-05-08T15:53:19.000Z
 	}
+```
+
+### Harvest Parser
+
+```javascript
+const {harvestParser} = require('chia-log-parser');
+const parser = harvestParser('/Users/foobar/.chia/mainnet/log/debug.log');
+
+['load', 'warning', 'signagePoint'].forEach((event) => {
+	parser.on(event, (...args) => console.log(`[${event}]`, ...args));
+});
+
+parser.watch().catch(console.log);
+// [signagePoint] {
+//   timestamp: 2021-05-25T16:36:16.305Z,
+//   eligible: 0,
+//   hash: '3ed0740787',
+//   proofs: 0,
+//   duration: 0.00487,
+//   plots: 73
+// }
+// [warning] {
+//   timestamp: 2021-05-21T09:11:48.229,
+//   message: 'Directory: /Volumes/foobar/plots does not exist.'
+// }
+// [load] {
+//   plots: 66,
+//   size: 6.532919835822213,
+//   sizeUnit: 'TiB',
+//   time: 0.08295607566833496,
+//   timestamp: new Date('2021-05-22T15:37:57.822')
+// }
+
+// parse from start to end
+parser.parse().then((data) => {
+	// data =
+	// {
+	//   load: [...],
+	//   signagePoint: [...],
+	//   warning: [...]
+	// }
+});
 ```
