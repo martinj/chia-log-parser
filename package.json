@@ -16,16 +16,16 @@
   "author": "Martin Jonsson <martin.jonsson@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@logdna/tail-file": "^2.0.6",
-    "date-fns": "^2.21.3",
+    "@logdna/tail-file": "^2.0.7",
+    "date-fns": "^2.22.1",
     "split2": "^3.2.2"
   },
   "devDependencies": {
     "@aptoma/eslint-config": "^7.0.1",
-    "auto-changelog": "^2.2.1",
-    "eslint": "^7.26.0",
-    "expect": "^26.6.2",
+    "auto-changelog": "^2.3.0",
+    "eslint": "^7.27.0",
+    "expect": "^27.0.2",
     "mocha": "^8.4.0",
-    "release-it": "^14.6.2"
+    "release-it": "^14.7.0"
   }
 }
