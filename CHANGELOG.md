@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
-#### [2.0.0](https://github.com/martinj/chia-log-parser/compare/1.0.0...2.0.0)
+#### [2.0.1](https://github.com/martinj/chia-log-parser/compare/2.0.0...2.0.1)
+
+- Fix issue with harvestParser.watch() failing on log file roll [`737adeb`](https://github.com/martinj/chia-log-parser/commit/737adeb77b075bf6985dcb83659715f5481e839a)
+
+### [2.0.0](https://github.com/martinj/chia-log-parser/compare/1.0.0...2.0.0)
+
+> 25 May 2021
 
 - Export {plotParser, harvestParser} [`13cc76d`](https://github.com/martinj/chia-log-parser/commit/13cc76d1f0a05c7e2284db27b33311fcfd118d03)
 - Rewrite and fix issues with plot parser not catching all lines on .watch() [`428398d`](https://github.com/martinj/chia-log-parser/commit/428398da5314bcb7227202caf7d1f09aa55770a7)
